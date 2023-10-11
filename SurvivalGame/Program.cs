@@ -1,12 +1,19 @@
-﻿namespace SurvivalGame
+﻿using SurvivalGame.Controler;
+using SurvivalGame.Model;
+
+namespace SurvivalGame
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Island Survival!");
             Player player = new Player();
+            DayStatus dayStatus = new DayStatus();
+            PlayerAction action = new PlayerAction();
+            DayController dayController = new DayController();
 
+
+            Console.WriteLine("Welcome to Island Survival!");
             do
 
             {
@@ -23,14 +30,21 @@
                 switch (playerInput)
                 {
                     case 1:
-                        player.Eat();
+                        action.Eat(player);
                         break;
                     case 2:
-                        player.Sleep();
+                        action.Sleep(player);
+                        DayController.ChanceWeatherOfTheDay();
+                        DayController.UpdateDaysPassed(dayStatus);
+                        Console.WriteLine(dayStatus);
                         break;
+                    case 3:
+                        action.WasteTime(player);
+                        break;
+
                     default:
-                        Console.WriteLine("idiot, try again!!");
-                        continue;
+                        Console.WriteLine("Invalid option. Try again.");
+                        break;
 
                 }
                 Console.WriteLine("Proceed to next action");
