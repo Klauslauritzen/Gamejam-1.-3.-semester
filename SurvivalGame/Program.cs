@@ -3,27 +3,33 @@ using SurvivalGame.Model;
 
 namespace SurvivalGame
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             Player player = new Player();
-            DayStatus dayStatus = new DayStatus();
             PlayerAction action = new PlayerAction();
             DayController dayController = new DayController();
+            DayStatus dayStatus = new DayStatus();
 
 
             Console.WriteLine("Welcome to Island Survival!");
             do
 
             {
+                Console.WriteLine("--------------------------------------------");
                 Console.WriteLine(player);
+                Console.WriteLine($"Day {dayStatus.DaysPassed}, Weather: {dayStatus.Weather}");
+                Console.WriteLine("--------------------------------------------\nChoose your next move\n--------------------------------------------");
                 Console.WriteLine("press 1 to eat");
                 Console.WriteLine("press 2 to sleep");
+                Console.WriteLine("press 3 to Waste some time");
+
                 string input = "";
                 int playerInput;
                 while (!int.TryParse(input, out playerInput))
                 {
+                    Console.Write("your Chose: ");
                     input = Console.ReadLine();
                 }
 
@@ -34,9 +40,8 @@ namespace SurvivalGame
                         break;
                     case 2:
                         action.Sleep(player);
-                        DayController.ChanceWeatherOfTheDay();
-                        DayController.UpdateDaysPassed(dayStatus);
-                        Console.WriteLine(dayStatus);
+                        dayStatus.DaysPassed += 1;
+                        dayStatus.Weather = DayController.ChanceWeatherOfTheDay();
                         break;
                     case 3:
                         action.WasteTime(player);
@@ -49,6 +54,7 @@ namespace SurvivalGame
                 }
                 Console.WriteLine("Proceed to next action");
                 Console.ReadLine();
+                        dayStatus.Weather = dayStatus.Weather;
                 
                 Console.Clear();
 

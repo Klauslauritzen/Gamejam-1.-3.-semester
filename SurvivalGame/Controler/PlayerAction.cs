@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace SurvivalGame.Controler
 {
+
     public class PlayerAction
     {
+    DayStatus dayStatus = new DayStatus();
         public void Eat(Player player)
         {
             player.Energy -= 5;
@@ -33,7 +35,18 @@ namespace SurvivalGame.Controler
                 player.Energy += 40;
                 player.Hunger -= 10;
                 player.Time = 10;
-                Console.WriteLine("You went sleep, and feel rested and ready make something out of the day!");
+                dayStatus.DaysPassed += 1;
+                Console.WriteLine("You went sleep.... zZz ... and feel rested and ready make something out of the day!");
+                Thread.Sleep(500);
+                Console.Write("zZz...");
+                Thread.Sleep(500);
+                Console.Write("zZz..."); 
+                Thread.Sleep(750);
+                Console.WriteLine("Z.z.z.");
+                Console.WriteLine(DayController.DayStatus(dayStatus));
+                //Console.WriteLine($"You are now on day {dayStatus.DaysPassed}\n" +
+                //                  $"it looks like the weather will be {dayStatus.Weather}");
+
 
                 if (player.Energy >= 100)
                 { player.Energy = 100; }

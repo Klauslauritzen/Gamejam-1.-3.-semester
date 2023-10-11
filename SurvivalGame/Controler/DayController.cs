@@ -28,5 +28,11 @@ namespace SurvivalGame.Controler
         {
             dayStatus.DaysPassed += 1;
         }
+        public static string DayStatus(DayStatus dayStatus)
+        {
+            return $"You are now on day {dayStatus.DaysPassed}\n" +
+                   $"The weather will be {dayStatus.Weather}";
+        }
+
     }
 }

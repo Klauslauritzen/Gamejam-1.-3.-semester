@@ -22,14 +22,9 @@ namespace SurvivalGame.Model
         public DayStatus() 
         {
             DaysPassed = 0;
-            Weather = new WeatherCondition();
+            Weather = WeatherCondition.Sunny;
         }
 
-        public override string ToString()
-        {
-            return $"You have been alone for {DaysPassed}.\n" +
-                   $"It looks like it will be {Weather} Today";
-        }
     }
 
 

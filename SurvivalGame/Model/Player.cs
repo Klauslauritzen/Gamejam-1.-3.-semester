@@ -17,7 +17,9 @@ public class Player
 
     public override string ToString()
     {
-        return $"Your hunger is {Hunger} \nYour Energy is {Energy}\n You have {Time}/10 time left";
+        return $"Your hunger is {Hunger} \n" +
+            $"Your Energy is {Energy}\n" +
+            $"You have {Time}/10 time left";
     }
 }
     
