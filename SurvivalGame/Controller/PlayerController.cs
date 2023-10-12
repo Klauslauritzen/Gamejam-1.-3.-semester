@@ -11,24 +11,52 @@ namespace SurvivalGame.Controller
 
     public class PlayerController
     {
-        PlayerModel player = new PlayerModel();
         public void Eat(PlayerModel player)
         {
-            player.Time -= 1;
-            if (player.Hunger >= 100)
+            LookInInventory(player.Items); // Vis inventory
+
+            Console.WriteLine("Choose the food you want to eat (enter a number):");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= player.Items.Count)
             {
-                player.Hunger -= 5;
-                player.Energy -= 10;
-                Console.WriteLine("You ate WAY too much and puked a little in your mouth");
-                Console.WriteLine("-5 hunger \n-10 to energy");
+                int itemIndex = choice - 1;
+
+                if (player.Items[itemIndex] is FoodModel food)
+                {
+                    player.Hunger += food.HungerRestored;
+
+                    Console.WriteLine($"You ate {food.Name}, which restored {food.HungerRestored} to your hunger.");
+                    player.Items.RemoveAt(itemIndex); // Fjern den spiste mad fra inventory
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Try again.");
+                }
             }
             else
             {
-                Console.WriteLine("You ate, that gave you 5+ to Hunger and took 5 energy away");
-                player.Energy -= 5;
-                player.Hunger += 5;
+                Console.WriteLine("Invalid choice. Try again.");
             }
         }
+
+        //public void Eat(PlayerModel player)
+        //{
+        //    player.Time -= 1;
+        //    if (player.Hunger >= 100)
+        //    {
+        //        player.Hunger -= 5;
+        //        player.Energy -= 10;
+        //        Console.WriteLine("You ate WAY too much and puked a little in your mouth");
+        //        Console.WriteLine("-5 hunger \n-10 to energy");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("You ate, that gave you 5+ to Hunger and took 5 energy away");
+        //        player.Energy -= 5;
+        //        player.Hunger += 5;
+        //    }
+        //}
         public void Sleep(PlayerModel player)
         {
             if (player.Energy >= 100)
@@ -105,8 +133,11 @@ namespace SurvivalGame.Controller
         {
             Random random = new Random();
             int randomNumber = random.Next(1, 101); // Generer et tal mellem 1 og 100
+            player.Energy -= 20;
+            player.Time -= 2;
+            player.Hunger -= 5;
 
-            if (randomNumber <= 40)
+            if (randomNumber <= 20)
             {
                 player.Items.Add(new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5));
             }
@@ -127,34 +158,18 @@ namespace SurvivalGame.Controller
 
         public void LookInInventory(List<ItemModel> items)
         {
-            Dictionary<string, int> itemCounts = new Dictionary<string, int>();
-
-            foreach (ItemModel item in items)
-            {
-                string itemName = item.Name;
-
-                if (itemCounts.ContainsKey(itemName))
-                {
-                    itemCounts[itemName]++;
-                }
-                else
-                {
-                    itemCounts[itemName] = 1;
-                }
-            }
-
             Console.WriteLine(Program.split);
             Console.WriteLine("This is your Inventory");
 
-            foreach (var kvp in itemCounts)
+            for (int i = 0; i < items.Count; i++)
             {
-                string itemName = kvp.Key;
-                int count = kvp.Value;
-                Console.WriteLine($"{count} x {itemName}");
+                string itemName = items[i].Name;
+                Console.WriteLine($"{i + 1}. {itemName}");
             }
 
             Console.WriteLine(Program.split);
         }
+
         public void CheckGameState(PlayerModel player)
         {
             if(player.Hunger >= 100)
@@ -165,6 +180,21 @@ namespace SurvivalGame.Controller
             {
                 player.Energy = 100;
             }
+            if(player.Energy <= 0)
+            {
+                Console.WriteLine("You are out of energy, you feel dizzy, and you start to sense the world spinning around you.");
+                Thread.Sleep(1500);
+                Console.WriteLine(".........");
+                Thread.Sleep(1000);
+                Console.WriteLine("Suddenly, it darkens before your eyes");
+                Thread.Sleep(1000);
+                Console.WriteLine("..........");
+                Thread.Sleep(2000);
+                Console.WriteLine("You awaken on the, hard ground, aching from your rough slumber. A sense of gnawing hunger begins to slowly encroach upon you.");
+                player.Energy += 15;
+                player.Hunger -= 30;
+                player.Time -= 3;
+            }
             if(player.Time <= -1)
             {
                 Console.WriteLine(Program.split);
@@ -173,6 +203,10 @@ namespace SurvivalGame.Controller
                 Sleep(player);
                 Console.WriteLine(Program.split);
                 Console.ReadLine();
+                if (player.Energy >= 100)
+                {
+                    player.Energy = 100;
+                }
             }
             if (player.Hunger <= 0)
             {
