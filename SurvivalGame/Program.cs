@@ -7,10 +7,10 @@ namespace SurvivalGame
     {
         static void Main(string[] args)
         {
-            Player player = new Player();
+            PlayerModel player = new PlayerModel();
             PlayerAction action = new PlayerAction();
             DayController dayController = new DayController();
-            DayStatus dayStatus = new DayStatus();
+            DayStatusModel dayStatus = new DayStatusModel();
 
 
             Console.WriteLine("Welcome to Island Survival!");

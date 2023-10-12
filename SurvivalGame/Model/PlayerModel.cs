@@ -1,13 +1,13 @@
 namespace SurvivalGame.Model;
 
-public class Player
+public class PlayerModel
 {
     public bool Alive { get; set; }
     public int Hunger { get; set; }
     public int Energy { get; set; }
     public int Time { get; set; }
 
-    public Player()
+    public PlayerModel()
     {
         Hunger = 100;
         Energy = 100;

@@ -10,8 +10,8 @@ namespace SurvivalGame.Controler
 
     public class PlayerAction
     {
-    DayStatus dayStatus = new DayStatus();
-        public void Eat(Player player)
+    DayStatusModel dayStatus = new DayStatusModel();
+        public void Eat(PlayerModel player)
         {
             player.Energy -= 5;
             player.Hunger += 5;
@@ -24,7 +24,7 @@ namespace SurvivalGame.Controler
             else
                 Console.WriteLine("You ate, that gave you 5+ to Hunger and took 5 energy away");
         }
-        public void Sleep(Player player)
+        public void Sleep(PlayerModel player)
         {
             if (player.Energy >= 100)
             {
@@ -52,7 +52,7 @@ namespace SurvivalGame.Controler
                 { player.Energy = 100; }
             }
         }
-        public void WasteTime(Player player)
+        public void WasteTime(PlayerModel player)
         {
             player.Hunger -= 5;
             player.Time -= 1;
