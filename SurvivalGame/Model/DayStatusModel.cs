@@ -14,12 +14,12 @@ namespace SurvivalGame.Model
         Sunny,
         Thunderstorm
     }
-    public class DayStatus
+    public class DayStatusModel
     {
         public int DaysPassed { get; set; }
         public WeatherCondition Weather { get; set; }
         
-        public DayStatus() 
+        public DayStatusModel() 
         {
             DaysPassed = 0;
             Weather = WeatherCondition.Sunny;

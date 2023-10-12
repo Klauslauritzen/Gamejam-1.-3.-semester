@@ -1,4 +1,4 @@
-﻿using SurvivalGame.Controler;
+﻿using SurvivalGame.Controller;
 using SurvivalGame.Model;
 
 namespace SurvivalGame
@@ -7,10 +7,10 @@ namespace SurvivalGame
     {
         static void Main(string[] args)
         {
-            Player player = new Player();
-            PlayerAction action = new PlayerAction();
+            PlayerModel player = new PlayerModel();
+            PlayerController action = new PlayerController();
             DayController dayController = new DayController();
-            DayStatus dayStatus = new DayStatus();
+            DayStatusModel dayStatus = new DayStatusModel();
 
 
             Console.WriteLine("Welcome to Island Survival!");
@@ -23,13 +23,13 @@ namespace SurvivalGame
                 Console.WriteLine("--------------------------------------------\nChoose your next move\n--------------------------------------------");
                 Console.WriteLine("press 1 to eat");
                 Console.WriteLine("press 2 to sleep");
-                Console.WriteLine("press 3 to Waste some time");
+                Console.WriteLine("press 3 to waste some time");
 
                 string input = "";
                 int playerInput;
                 while (!int.TryParse(input, out playerInput))
                 {
-                    Console.Write("your Chose: ");
+                    Console.Write("your choose: ");
                     input = Console.ReadLine();
                 }
 
@@ -40,7 +40,7 @@ namespace SurvivalGame
                         break;
                     case 2:
                         action.Sleep(player);
-                        dayStatus.DaysPassed += 1;
+                        //dayStatus.DaysPassed += 1;
                         dayStatus.Weather = DayController.ChanceWeatherOfTheDay();
                         break;
                     case 3:

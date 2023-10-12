@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SurvivalGame.Controler
+namespace SurvivalGame.Controller
 {
     public class DayController
     {
@@ -24,11 +24,11 @@ namespace SurvivalGame.Controler
                 return WeatherCondition.Thunderstorm;
         }
 
-        public static void UpdateDaysPassed(DayStatus dayStatus)
+        public static void UpdateDaysPassed(DayStatusModel dayStatus)
         {
             dayStatus.DaysPassed += 1;
         }
-        public static string DayStatus(DayStatus dayStatus)
+        public static string DayStatus(DayStatusModel dayStatus)
         {
             return $"You are now on day {dayStatus.DaysPassed}\n" +
                    $"The weather will be {dayStatus.Weather}";
