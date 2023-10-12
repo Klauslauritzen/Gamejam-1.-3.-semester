@@ -23,9 +23,11 @@ namespace SurvivalGame.Controller
                 Console.WriteLine("-5 hunger \n-10 to energy");
             }
             else
+            {
                 Console.WriteLine("You ate, that gave you 5+ to Hunger and took 5 energy away");
                 player.Energy -= 5;
                 player.Hunger += 5;
+            }
         }
         public void Sleep(PlayerModel player)
         {
@@ -33,23 +35,40 @@ namespace SurvivalGame.Controller
             {
                 Console.WriteLine("Nice try buddy, you cant be sleeping all day");
             }
+            else if (player.Time <= 0)
+            {
+                player.Energy += 40;
+                player.Hunger -= 10;
+                player.Time = 8;
+                DayStatusModel.DaysPassed += 1;
+                Console.WriteLine("You went sleep.... zZz ...");
+                Thread.Sleep(500);
+                Console.Write("zZz...");
+                Thread.Sleep(500);
+                Console.Write("zZz...");
+                Thread.Sleep(750);
+                Console.WriteLine("Z.z.z.");
+                Console.WriteLine("You woke up, but you oversleept a little, and have a little less time for the day");
+                DayStatusModel.Weather = DayController.ChanceWeatherOfTheDay();
+                Console.WriteLine(DayController.DayStatus());
+            }
             else
-            {               
+            {
                 player.Energy += 40;
                 player.Hunger -= 10;
                 player.Time = 10;
                 DayStatusModel.DaysPassed += 1;
-                Console.WriteLine("You went sleep.... zZz ... and feel rested and ready make something out of the day!");
+                Console.WriteLine("You went sleep.... zZz ...");
                 Thread.Sleep(500);
                 Console.Write("zZz...");
                 Thread.Sleep(500);
-                Console.Write("zZz..."); 
+                Console.Write("zZz...");
                 Thread.Sleep(750);
                 Console.WriteLine("Z.z.z.");
+                Console.WriteLine("You woke up and feel rested and ready make something out of the day!");
                 DayStatusModel.Weather = DayController.ChanceWeatherOfTheDay();
                 Console.WriteLine(DayController.DayStatus());
-                //Console.WriteLine($"You are now on day {dayStatus.DaysPassed}\n" +
-                //                  $"it looks like the weather will be {dayStatus.Weather}");
+
 
 
                 if (player.Energy >= 100)
@@ -60,25 +79,107 @@ namespace SurvivalGame.Controller
         {
             player.Hunger -= 5;
             player.Time -= 1;
+            if(DayStatusModel.Weather == WeatherCondition.Sunny)
+            {
+                player.Energy += 10;
+                Console.WriteLine("You enjoy the the sun, the heat is perfect at you feel like you have more Energy");
+            }
+            else if (DayStatusModel.Weather == WeatherCondition.Cloudy)
+            {
+                player.Energy += 5;
+                Console.WriteLine("The cloudy weather keeps you comfortable.");
+            }
+            else if (DayStatusModel.Weather == WeatherCondition.Rain)
+            {
+                player.Energy -= 5;
+                Console.WriteLine("The rain drains your energy. You feel a bit tired.");
+            }
+            else if (DayStatusModel.Weather == WeatherCondition.Thunderstorm)
+            {
+                player.Energy -= 15;
+                Console.WriteLine("The thunderstorm is frightening and exhausting. You lose a significant amount of energy.");
+            }
         }
 
         public void LookForFood(PlayerModel player)
         {
-            player.Items.Add(new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5));
-        }
-        public void LookInInventory(PlayerModel player)
-        {
-            int count = 0;
-            string itemName = "";
-            foreach (ItemModel item in player.Items)
+            Random random = new Random();
+            int randomNumber = random.Next(1, 101); // Generer et tal mellem 1 og 100
+
+            if (randomNumber <= 40)
             {
-                if (item.Type == ItemType.Food)
+                player.Items.Add(new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5));
+            }
+            else if (randomNumber <= 80)
+            {
+                player.Items.Add(new FoodModel("Decent Apple", ItemType.Food, ItemQuality.Good, 10));
+            }
+            else
+            {
+                player.Items.Add(new FoodModel("Delicious Apple", ItemType.Food, ItemQuality.Excellent, 15));
+            }
+
+            var items = player.Items;
+            Console.WriteLine($"After walking around for a LOOOOOOOONG 1 time you found a {items[items.Count - 1].Name} ");
+            Console.WriteLine(Program.split);
+
+        }
+
+        public void LookInInventory(List<ItemModel> items)
+        {
+            Dictionary<string, int> itemCounts = new Dictionary<string, int>();
+
+            foreach (ItemModel item in items)
+            {
+                string itemName = item.Name;
+
+                if (itemCounts.ContainsKey(itemName))
                 {
-                    itemName = item.Name;
-                    count++; 
+                    itemCounts[itemName]++;
+                }
+                else
+                {
+                    itemCounts[itemName] = 1;
                 }
             }
-                Console.WriteLine($"{count} x {itemName}");     
+
+            Console.WriteLine(Program.split);
+            Console.WriteLine("This is your Inventory");
+
+            foreach (var kvp in itemCounts)
+            {
+                string itemName = kvp.Key;
+                int count = kvp.Value;
+                Console.WriteLine($"{count} x {itemName}");
+            }
+
+            Console.WriteLine(Program.split);
+        }
+        public void CheckGameState(PlayerModel player)
+        {
+            if(player.Hunger >= 100)
+            {
+                player.Hunger = 100;
+            }
+            if (player.Energy >= 100)
+            {
+                player.Energy = 100;
+            }
+            if(player.Time <= -1)
+            {
+                Console.WriteLine(Program.split);
+                Console.WriteLine("You reached the end of the day, you have to go seek some shelter");
+                player.Energy -= 10;
+                Sleep(player);
+                Console.WriteLine(Program.split);
+                Console.ReadLine();
+            }
+            if (player.Hunger <= 0)
+            {
+                player.Alive = false;
+                Console.WriteLine("Game Over \nYou Died");
+                Console.WriteLine(Program.split);
+            }
         }
     }
 }
