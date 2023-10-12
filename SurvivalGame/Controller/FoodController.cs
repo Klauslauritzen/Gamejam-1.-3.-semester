@@ -8,10 +8,6 @@ namespace SurvivalGame.Controller
 {
     public class FoodController
     {
-        private static Random random = new Random();
-        //public static ItemQuality ChanceOfFoodQuality()
-        //{
-
-        //}
+        
     }
 }

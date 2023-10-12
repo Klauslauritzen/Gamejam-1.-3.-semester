@@ -1,5 +1,6 @@
 ﻿using SurvivalGame.Controller;
 using SurvivalGame.Model;
+using System.Xml.Linq;
 
 namespace SurvivalGame
 {
@@ -24,6 +25,7 @@ namespace SurvivalGame
                 Console.WriteLine("press 1 to eat");
                 Console.WriteLine("press 2 to sleep");
                 Console.WriteLine("press 3 to waste some time");
+                Console.WriteLine("Press 4 to look for food");
 
                 string input = "";
                 int playerInput;
@@ -45,6 +47,13 @@ namespace SurvivalGame
                         break;
                     case 3:
                         action.WasteTime(player);
+                        break;
+                    case 4:
+                        action.LookForFood(new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5), player);
+                        foreach(ItemModel item in player.Items)
+                        {
+                            Console.WriteLine(item.Name);
+                        }                      
                         break;
 
                     default:

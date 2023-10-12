@@ -11,6 +11,7 @@ namespace SurvivalGame.Controller
     public class PlayerController
     {
     DayStatusModel dayStatus = new DayStatusModel();
+        PlayerModel player = new PlayerModel();
         public void Eat(PlayerModel player)
         {
             player.Energy -= 5;
@@ -58,6 +59,9 @@ namespace SurvivalGame.Controller
             player.Time -= 1;
         }
 
-
+        public void LookForFood(ItemModel item, PlayerModel player)
+        {
+            player.Items.Add();
+        }
     }
 }

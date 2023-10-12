@@ -16,5 +16,9 @@ namespace SurvivalGame.Model
             this.Quality = Quality;
             this.HungerRestored = HungerRestored;
         }
+        //public FoodModel ApplePoor = new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5);
+        //public FoodModel AppleGood = new FoodModel("Decent Apple", ItemType.Food, ItemQuality.Good, 10);
+        //public FoodModel AppleExcellent = new FoodModel("Delicious Apple", ItemType.Food, ItemQuality.Excellent, 15);
+
     }
 }
