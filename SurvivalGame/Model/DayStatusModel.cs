@@ -22,7 +22,7 @@ namespace SurvivalGame.Model
         public DayStatusModel() 
         {
             DaysPassed = 0;
-            Weather = WeatherCondition.Sunny;
+            Weather = Weather;
         }
 
     }
