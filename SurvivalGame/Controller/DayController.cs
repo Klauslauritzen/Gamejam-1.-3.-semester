@@ -24,14 +24,14 @@ namespace SurvivalGame.Controller
                 return WeatherCondition.Thunderstorm;
         }
 
-        public static void UpdateDaysPassed(DayStatusModel dayStatus)
+        public static void UpdateDaysPassed()
         {
-            dayStatus.DaysPassed += 1;
+            DayStatusModel.DaysPassed += 1;
         }
-        public static string DayStatus(DayStatusModel dayStatus)
+        public static string DayStatus()
         {
-            return $"You are now on day {dayStatus.DaysPassed}\n" +
-                   $"The weather will be {dayStatus.Weather}";
+            return $"You are now on day {DayStatusModel.DaysPassed}\n" +
+                   $"The weather will be {DayStatusModel.Weather}";
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using SurvivalGame.Controller;
 using SurvivalGame.Model;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace SurvivalGame
@@ -11,7 +12,6 @@ namespace SurvivalGame
             PlayerModel player = new PlayerModel();
             PlayerController action = new PlayerController();
             DayController dayController = new DayController();
-            DayStatusModel dayStatus = new DayStatusModel();
 
 
             Console.WriteLine("Welcome to Island Survival!");
@@ -20,7 +20,7 @@ namespace SurvivalGame
             {
                 Console.WriteLine("--------------------------------------------");
                 Console.WriteLine(player);
-                Console.WriteLine($"Day {dayStatus.DaysPassed}, Weather: {dayStatus.Weather}");
+                Console.WriteLine($"Day {DayStatusModel.DaysPassed}, Weather: {DayStatusModel.Weather}");
                 Console.WriteLine("--------------------------------------------\nChoose your next move\n--------------------------------------------");
                 Console.WriteLine("press 1 to eat");
                 Console.WriteLine("press 2 to sleep");
@@ -43,17 +43,17 @@ namespace SurvivalGame
                     case 2:
                         action.Sleep(player);
                         //dayStatus.DaysPassed += 1;
-                        dayStatus.Weather = DayController.ChanceWeatherOfTheDay();
                         break;
                     case 3:
                         action.WasteTime(player);
                         break;
                     case 4:
-                        action.LookForFood(new FoodModel("Rotten Apple", ItemType.Food, ItemQuality.Poor, 5), player);
-                        foreach(ItemModel item in player.Items)
-                        {
-                            Console.WriteLine(item.Name);
-                        }                      
+                        action.LookForFood(player);
+                        var items = player.Items;
+                        Console.WriteLine($"After walking around for a LOOOOOOOONG 1 time you found a {items[items.Count-1].Name} ");
+                        break;
+                    case 5:
+                        action.LookInInventory(player);
                         break;
 
                     default:
@@ -63,8 +63,7 @@ namespace SurvivalGame
                 }
                 Console.WriteLine("Proceed to next action");
                 Console.ReadLine();
-                        dayStatus.Weather = dayStatus.Weather;
-                
+
                 Console.Clear();
 
 

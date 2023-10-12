@@ -14,15 +14,15 @@ namespace SurvivalGame.Model
         Sunny,
         Thunderstorm
     }
-    public class DayStatusModel
+    public static class DayStatusModel
     {
-        public int DaysPassed { get; set; }
-        public WeatherCondition Weather { get; set; }
+        public static int DaysPassed { get; set; }
+        public static WeatherCondition Weather { get; set; }
         
-        public DayStatusModel() 
+        static DayStatusModel() 
         {
             DaysPassed = 0;
-            Weather = Weather;
+            Weather = WeatherCondition.Sunny;
         }
 
     }
